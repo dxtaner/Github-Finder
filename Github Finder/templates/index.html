@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Github Finder</title>
+    <link
+      rel="stylesheet"
+      href="https://bootswatch.com/4/lux/bootstrap.min.css" />
+    <style>
+      .repo-item:hover {
+        background-color: #aaaeb3;
+        transition: background-color 0.3s;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-dark bg-primary">
+      <div class="container">
+        <a href="/" class="navbar-brand">Github Kullanıcı Bulma</a>
+      </div>
+    </nav>
+    <div class="container mt-4">
+      <div class="row">
+        <div class="col-md-6">
+          <h2>Arama</h2>
+          <form action="/" method="post">
+            <div class="input-group">
+              <input
+                type="text"
+                name="githubname"
+                class="form-control"
+                placeholder="Github Kullanıcı adı" />
+              <div class="input-group-append">
+                <button type="submit" class="btn btn-primary">Ara</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      {% if profile %}
+      <div class="row mt-4">
+        <div class="col-md-6">
+          <div class="card">
+            <img
+              src="{{ profile.avatar_url }}"
+              class="card-img-top img-thumbnail"
+              alt="Avatar" />
+            <div class="card-body">
+              <h5 class="card-title">{{ profile.login }}</h5>
+              <p class="card-text">{{ profile.bio }}</p>
+              <a
+                href="{{ profile.html_url }}"
+                class="btn btn-primary"
+                target="_blank"
+                >Profili Görüntüle</a
+              >
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <h2>Profil Detayları</h2>
+          <ul class="list-group">
+            <li class="list-group-item">
+              Takipçi Sayısı: {{ profile.followers }}
+            </li>
+            <li class="list-group-item">
+              Takip Edilen Sayısı: {{ profile.following }}
+            </li>
+            <li class="list-group-item">
+              Toplam Repo Sayısı: {{ profile.public_repos }}
+            </li>
+            <li class="list-group-item">
+              Toplam Gist Sayısı: {{ profile.public_gists }}
+            </li>
+            <li class="list-group-item">Şirket: {{ profile.company }}</li>
+            <li class="list-group-item">
+              Website/Blog:
+              <a href="{{ profile.blog }}" target="_blank"
+                >{{ profile.blog }}</a
+              >
+            </li>
+            <li class="list-group-item">Konum: {{ profile.location }}</li>
+            <li class="list-group-item">
+              Üyelik Tarihi: {{ profile.created_at }}
+            </li>
+            <li class="list-group-item">E-posta: {{ profile.email }}</li>
+            <li class="list-group-item">
+              Twitter Kullanıcı Adı: {{ profile.twitter_username }}
+            </li>
+          </ul>
+        </div>
+      </div>
+      {% endif %} {% if repos %}
+      <div class="row mt-4">
+        <div class="col-md-12">
+          <h2>En Son Repolar</h2>
+          <ul class="list-group">
+            {% for repo in repos %}
+            <li class="list-group-item repo-item">
+              <a href="{{ repo.html_url }}" target="_blank">{{ repo.name }}</a>
+              <span class="badge badge-primary"
+                >{{ repo.stargazers_count }} Yıldız</span
+              >
+              <span class="badge badge-success">{{ repo.forks }} Fork</span>
+              <span class="badge badge-info">{{ repo.language }}</span>
+              <p>{{ repo.description }}</p>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+
+      {% endif %}
+    </div>
+
+    <footer class="text-center mt-5">
+      &copy; 2023 Bu sayfa
+      <a href="https://github.com/dxtaner" target="_blank">dxtaner</a>
+      tarafından tasarlanmıştır.
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap/dist/js/bootstrap.min.js"></script>
+  </body>
+</html>
